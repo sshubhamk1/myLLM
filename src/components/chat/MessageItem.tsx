@@ -8,7 +8,7 @@ interface Props {
 
 export default function MessageItem({ message }: Props) {
   if (message.role === 'user') {
-    return <UserMessage content={message.content} />
+    return <UserMessage content={message.content} attachments={message.attachments} />
   }
   return <AssistantMessage content={message.content} />
 }

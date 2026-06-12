@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import type { Message } from '@/types/chat'
+import type { Attachment, Message } from '@/types/chat'
 import { useSSEStream } from '@/hooks/useSSEStream'
 import { useAutoScroll } from '@/hooks/useAutoScroll'
 import MessageList from './MessageList'
@@ -10,6 +10,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [streamingContent, setStreamingContent] = useState('')
   const [inputValue, setInputValue] = useState('')
+  const [attachments, setAttachments] = useState<Attachment[]>([])
   const [error, setError] = useState<string | null>(null)
 
   const pendingMessagesRef = useRef<Message[]>([])
@@ -46,13 +47,14 @@ export default function ChatPage() {
 
   const handleSubmit = () => {
     const trimmed = inputValue.trim()
-    if (!trimmed || isStreaming) return
+    if (isStreaming || (!trimmed && attachments.length === 0)) return
 
     const userMsg: Message = {
       // id: crypto.randomUUID(),
       id: Date.now().toString(),
       role: 'user',
       content: trimmed,
+      attachments: attachments.length > 0 ? [...attachments] : undefined,
       createdAt: new Date(),
     }
 
@@ -60,6 +62,7 @@ export default function ChatPage() {
     setMessages(nextMessages)
     pendingMessagesRef.current = nextMessages
     setInputValue('')
+    setAttachments([])
     setError(null)
     streamingContentRef.current = ''
     setStreamingContent('')
@@ -108,6 +111,9 @@ export default function ChatPage() {
       <ChatInputBar
         value={inputValue}
         onChange={setInputValue}
+        attachments={attachments}
+        onAttach={(items) => setAttachments(prev => [...prev, ...items])}
+        onRemoveAttachment={(id) => setAttachments(prev => prev.filter(a => a.id !== id))}
         onSubmit={handleSubmit}
         onStop={handleStop}
         isStreaming={isStreaming}
