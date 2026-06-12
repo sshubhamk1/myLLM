@@ -1,15 +1,16 @@
 import { useRef, useState } from 'react'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
-import { BASE_URL, buildChatRequest } from '@/config/api'
+import { buildChatRequest } from '@/config/api'
 import type { Message } from '@/types/chat'
 
 interface Callbacks {
   onToken: (token: string) => void
   onDone: () => void
   onError: (err: Error) => void
+  baseUrl: string
 }
 
-export function useSSEStream({ onToken, onDone, onError }: Callbacks) {
+export function useSSEStream({ onToken, onDone, onError, baseUrl }: Callbacks) {
   const [isStreaming, setIsStreaming] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -18,7 +19,7 @@ export function useSSEStream({ onToken, onDone, onError }: Callbacks) {
     setIsStreaming(true)
 
     try {
-      await fetchEventSource(`${BASE_URL}/v1/chat/completions`, {
+      await fetchEventSource(`${baseUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(buildChatRequest(messages)),

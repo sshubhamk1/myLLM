@@ -6,7 +6,11 @@ import MessageList from './MessageList'
 import ChatInputBar from '@/components/input/ChatInputBar'
 import ScrollToBottomButton from '@/components/ui/ScrollToBottomButton'
 
-export default function ChatPage() {
+interface Props {
+  baseUrl: string
+}
+
+export default function ChatPage({ baseUrl }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [streamingContent, setStreamingContent] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -17,6 +21,7 @@ export default function ChatPage() {
   const streamingContentRef = useRef('')
 
   const { sendMessage, stopStream, isStreaming } = useSSEStream({
+    baseUrl,
     onToken: useCallback((token: string) => {
       streamingContentRef.current += token
       setStreamingContent(streamingContentRef.current)
