@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { type CSSProperties, forwardRef } from 'react'
 import type { Message } from '@/types/chat'
 import MessageItem from './MessageItem'
 import AssistantMessage from './AssistantMessage'
@@ -13,8 +13,9 @@ interface Props {
 const MessageList = forwardRef<HTMLDivElement, Props>(
   ({ messages, streamingContent, isStreaming }, ref) => {
     return (
-      <div ref={ref} className="flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-3xl px-4 py-6">
+      <div ref={ref} className="flex-1 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' } as CSSProperties}>
+        <div className="mx-auto max-w-3xl pl-safe pr-safe">
+        <div className="px-4 py-6">
           {messages.length === 0 && !isStreaming && (
             <div className="flex h-full min-h-[50vh] flex-col items-center justify-center text-center">
               <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">
@@ -45,6 +46,7 @@ const MessageList = forwardRef<HTMLDivElement, Props>(
           </div>
 
           <div className="h-4" />
+        </div>
         </div>
       </div>
     )

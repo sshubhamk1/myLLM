@@ -36,8 +36,9 @@ export default function ChatTextarea({ value, onChange, onSubmit, disabled, plac
       placeholder={placeholder ?? (disabled ? 'Waiting for response…' : 'Message MyLLM…')}
       rows={1}
       className={cn(
-        'w-full resize-none bg-transparent text-sm text-neutral-100 placeholder-neutral-500',
-        'max-h-[200px] overflow-y-auto py-2.5 pl-4 pr-2 leading-relaxed',
+        // text-base (16px) prevents iOS Safari from zooming on input focus
+        'w-full resize-none bg-transparent text-base text-neutral-100 placeholder-neutral-500',
+        'max-h-[200px] overflow-y-auto py-2.5 pl-2 pr-2 leading-relaxed',
         'focus:outline-none',
         disabled && 'cursor-not-allowed opacity-60',
       )}

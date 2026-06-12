@@ -28,11 +28,11 @@ export default function ChatInputBar({
   const canSend = !isStreaming && (value.trim().length > 0 || attachments.length > 0)
 
   return (
-    <div className="flex-shrink-0">
+    <div className="flex-shrink-0 pb-safe">
       <div className="relative">
         <div className="pointer-events-none absolute -top-10 left-0 right-0 h-10 bg-gradient-to-t from-neutral-900 to-transparent" />
       </div>
-      <div className="mx-auto max-w-3xl px-4 pb-5">
+      <div className="mx-auto max-w-3xl px-4 pb-3">
         <div className="rounded-2xl border border-neutral-600 bg-neutral-800 shadow-lg focus-within:border-neutral-500 focus-within:ring-1 focus-within:ring-neutral-500">
           <AttachmentPreview attachments={attachments} onRemove={onRemoveAttachment} />
           <div className="flex items-end gap-1 pr-2">

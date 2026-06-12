@@ -75,9 +75,9 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-neutral-900">
-      {/* Header */}
-      <header className="flex flex-shrink-0 items-center justify-center border-b border-neutral-800 bg-neutral-900 h-14 px-4">
+    <div className="flex h-dvh flex-col bg-neutral-900">
+      {/* Header — sits above notch/Dynamic Island via pt-safe */}
+      <header className="flex flex-shrink-0 items-center justify-center border-b border-neutral-800 bg-neutral-900 pt-safe px-4" style={{ minHeight: 'calc(3.5rem + env(safe-area-inset-top, 0px))' }}>
         <span className="text-base font-semibold text-neutral-200 tracking-wide">MyLLM</span>
       </header>
 
