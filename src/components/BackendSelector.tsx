@@ -23,7 +23,7 @@ const OPTIONS: Option[] = [
     id: 'local',
     label: 'Local Network',
     description: 'mDNS hostname',
-    url: 'http://shubhapp.local:1234',
+    url: 'https://shubhapp.local',
   },
   {
     id: 'custom',
