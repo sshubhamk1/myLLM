@@ -8,9 +8,10 @@ interface Callbacks {
   onDone: () => void
   onError: (err: Error) => void
   baseUrl: string
+  model: string
 }
 
-export function useSSEStream({ onToken, onDone, onError, baseUrl }: Callbacks) {
+export function useSSEStream({ onToken, onDone, onError, baseUrl, model }: Callbacks) {
   const [isStreaming, setIsStreaming] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -22,7 +23,7 @@ export function useSSEStream({ onToken, onDone, onError, baseUrl }: Callbacks) {
       await fetchEventSource(`${baseUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildChatRequest(messages)),
+        body: JSON.stringify(buildChatRequest(messages, model)),
         signal: abortRef.current.signal,
         openWhenHidden: true,
         onmessage(ev) {

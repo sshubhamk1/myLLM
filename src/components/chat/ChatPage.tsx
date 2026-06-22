@@ -8,9 +8,10 @@ import ScrollToBottomButton from '@/components/ui/ScrollToBottomButton'
 
 interface Props {
   baseUrl: string
+  model: string
 }
 
-export default function ChatPage({ baseUrl }: Props) {
+export default function ChatPage({ baseUrl, model }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [streamingContent, setStreamingContent] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -22,6 +23,7 @@ export default function ChatPage({ baseUrl }: Props) {
 
   const { sendMessage, stopStream, isStreaming } = useSSEStream({
     baseUrl,
+    model,
     onToken: useCallback((token: string) => {
       streamingContentRef.current += token
       setStreamingContent(streamingContentRef.current)

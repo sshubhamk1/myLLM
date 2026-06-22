@@ -31,9 +31,9 @@ function buildContent(msg: Message): string | (TextPart | ImagePart)[] {
   return parts
 }
 
-export function buildChatRequest(messages: Message[]) {
+export function buildChatRequest(messages: Message[], model: string = DEFAULT_MODEL) {
   return {
-    model: DEFAULT_MODEL,
+    model,
     messages: messages.map(m => ({ role: m.role, content: buildContent(m) })),
     stream: true,
   }
